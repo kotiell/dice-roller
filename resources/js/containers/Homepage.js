@@ -13,7 +13,6 @@ const Homepage = () => {
   return (
     <div>
       <p>Your 1d20 roll = {rollDice()}</p>
-
     </div>
   )
 }
