@@ -2,22 +2,23 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laravel</title>
+  <!-- Styles -->
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
 
   @yield('content')
-    <!-- React root DOM -->
-    <div id="example">
-    </div>
+  <!-- React root DOM -->
+  <div id="homepage">
+  </div>
 
-    <!-- React JS -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+  <!-- React JS -->
+  <script src="{{ asset('js/app.js') }}" defer></script>
 
 </body>
+
 </html>

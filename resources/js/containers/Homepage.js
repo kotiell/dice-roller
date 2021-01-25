@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-
-
-
-
-
+import DiceRoll from '../components/DiceRoll';
 
 const Homepage = () => {
 
   const [diceRoll, setDiceRoll] = useState(0);
   const [rollModify, setRollModify] = useState(0);
+  const [pastRolls, setPastRolls] = useState(0);
+  const [totalRoll, setTotalRoll] = useState(0);
+  const [count, setCount] = useState(0);
 
+  /*
+    To do:
+    The text box appears to be showing the previous roll's value
+
+  */
   const rollDice = (num) => {
-    setDiceRoll(Number(((Math.random() * num) + 1).toFixed(0)) + Number(rollModify));
-    console.log(diceRoll + ' + ' + rollModify);
+    setDiceRoll(DiceRoll(num));
+    setTotalRoll(Number(diceRoll) + Number(rollModify));
+    setPastRolls(String(pastRolls) + '\n' + count + String(totalRoll));
+    console.log(Number(diceRoll) + Number(rollModify))
+    console.log("Total: " + totalRoll + " Rolled a " + diceRoll + " with a modifier of " + rollModify + " count " + count);
+    setCount(count + 1);
   }
+
 
   return (
     <div>
@@ -30,6 +39,9 @@ const Homepage = () => {
       <button onClick={() => { rollDice(9) }}>10</button>
       <button onClick={() => { rollDice(11) }}>12</button>
       <button onClick={() => { rollDice(19) }}>20</button>
+      <div>
+        <textarea value={pastRolls} style={{height: '900px', width: '400px'}} />
+      </div>
     </div>
   )
 }
@@ -37,6 +49,6 @@ const Homepage = () => {
 
 export { Homepage as default }
 
-if (document.getElementById('example')) {
-  ReactDOM.render(<Homepage />, document.getElementById('example'));
+if (document.getElementById('homepage')) {
+  ReactDOM.render(<Homepage />, document.getElementById('homepage'));
 }

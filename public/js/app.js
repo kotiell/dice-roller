@@ -1902,6 +1902,28 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/DiceRoll.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/DiceRoll.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ DiceRoll
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+var DiceRoll = function DiceRoll(num) {
+  return Number((Math.random() * num + 1).toFixed(0));
+};
+
+
+
+/***/ }),
+
 /***/ "./resources/js/containers/Homepage.js":
 /*!*********************************************!*\
   !*** ./resources/js/containers/Homepage.js ***!
@@ -1916,6 +1938,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _components_DiceRoll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/DiceRoll */ "./resources/js/components/DiceRoll.js");
 
 
 
@@ -1934,6 +1957,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Homepage = function Homepage() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
       _useState2 = _slicedToArray(_useState, 2),
@@ -1945,9 +1969,33 @@ var Homepage = function Homepage() {
       rollModify = _useState4[0],
       setRollModify = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+      _useState6 = _slicedToArray(_useState5, 2),
+      pastRolls = _useState6[0],
+      setPastRolls = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+      _useState8 = _slicedToArray(_useState7, 2),
+      totalRoll = _useState8[0],
+      setTotalRoll = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+      _useState10 = _slicedToArray(_useState9, 2),
+      count = _useState10[0],
+      setCount = _useState10[1];
+  /*
+    To do:
+    The text box appears to be showing the previous roll's value
+    */
+
+
   var rollDice = function rollDice(num) {
-    setDiceRoll(Number((Math.random() * num + 1).toFixed(0)) + Number(rollModify));
-    console.log(diceRoll + ' + ' + rollModify);
+    setDiceRoll((0,_components_DiceRoll__WEBPACK_IMPORTED_MODULE_3__.default)(num));
+    setTotalRoll(Number(diceRoll) + Number(rollModify));
+    setPastRolls(String(pastRolls) + '\n' + count + String(totalRoll));
+    console.log(Number(diceRoll) + Number(rollModify));
+    console.log("Total: " + totalRoll + " Rolled a " + diceRoll + " with a modifier of " + rollModify + " count " + count);
+    setCount(count + 1);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -1989,14 +2037,22 @@ var Homepage = function Homepage() {
         rollDice(19);
       },
       children: "20"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", {
+        value: pastRolls,
+        style: {
+          height: '900px',
+          width: '400px'
+        }
+      })
     })]
   });
 };
 
 
 
-if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Homepage, {}), document.getElementById('example'));
+if (document.getElementById('homepage')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Homepage, {}), document.getElementById('homepage'));
 }
 
 /***/ }),
