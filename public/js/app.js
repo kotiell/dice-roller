@@ -1917,7 +1917,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var DiceRoll = function DiceRoll(num) {
-  return Number((Math.random() * num + 1).toFixed(0));
+  var rollValue = Number((Math.random() * num + 1).toFixed(0));
+  return rollValue;
 };
 
 
@@ -1969,44 +1970,53 @@ var Homepage = function Homepage() {
       rollModify = _useState4[0],
       setRollModify = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState6 = _slicedToArray(_useState5, 2),
       pastRolls = _useState6[0],
       setPastRolls = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-      _useState8 = _slicedToArray(_useState7, 2),
-      totalRoll = _useState8[0],
-      setTotalRoll = _useState8[1];
-
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-      _useState10 = _slicedToArray(_useState9, 2),
-      count = _useState10[0],
-      setCount = _useState10[1];
+  var totalRoll = 0;
+  var rollNumber = 0;
   /*
     To do:
     The text box appears to be showing the previous roll's value
     */
 
-
   var rollDice = function rollDice(num) {
     setDiceRoll((0,_components_DiceRoll__WEBPACK_IMPORTED_MODULE_3__.default)(num));
-    setTotalRoll(Number(diceRoll) + Number(rollModify));
-    setPastRolls(String(pastRolls) + '\n' + count + String(totalRoll));
-    console.log(Number(diceRoll) + Number(rollModify));
-    console.log("Total: " + totalRoll + " Rolled a " + diceRoll + " with a modifier of " + rollModify + " count " + count);
-    setCount(count + 1);
   };
 
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (diceRoll != 0) {
+      console.log(diceRoll);
+      totalRoll = Number(diceRoll) + Number(rollModify); // Trying to make the text update on current button push
+      // setPastRolls(pastRolls => pastRolls[rollNumber] = totalRoll);
+      // console.log(pastRolls)
+
+      rollNumber++;
+    }
+  }, [diceRoll]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      id: "roll-area",
-      children: diceRoll
+    style: {
+      padding: '4rem'
+    },
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
+      children: "Dice Roller"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+      style: {
+        marginTop: '1rem'
+      },
+      children: "Add a modifier to your roll"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
       value: rollModify,
       onChange: function onChange(event) {
         return setRollModify(event.target.value);
       }
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+      style: {
+        marginTop: '1rem'
+      },
+      children: "Choose a dice to Roll"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
       onClick: function onClick() {
         rollDice(3);
@@ -2038,12 +2048,24 @@ var Homepage = function Homepage() {
       },
       children: "20"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", {
-        value: pastRolls,
-        style: {
-          height: '900px',
-          width: '400px'
-        }
+      id: "roll-area",
+      children: diceRoll
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
+      style: {
+        marginTop: '1rem'
+      },
+      children: "Rolls"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      style: {
+        height: '500px',
+        width: '100px',
+        overflowY: 'scroll',
+        border: 'solid 1px #666'
+      },
+      children: pastRolls.map(function (item) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          children: item
+        }, item);
       })
     })]
   });

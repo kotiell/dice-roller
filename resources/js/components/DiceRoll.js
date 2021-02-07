@@ -1,8 +1,10 @@
 import React from 'react';
 
 const DiceRoll = (num) => {
-  return (
-    Number(((Math.random() * num) + 1).toFixed(0))
+  
+  const rollValue = Number(((Math.random() * num) + 1).toFixed(0))
+  return ( 
+    rollValue
   )
 }
 
