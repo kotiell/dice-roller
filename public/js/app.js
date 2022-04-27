@@ -1916,8 +1916,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
-var DiceRoll = function DiceRoll(num) {
-  var rollValue = Number((Math.random() * num + 1).toFixed(0));
+var DiceRoll = function DiceRoll(num, rollModify) {
+  var rollValue = Number((Math.random() * num + 1).toFixed(0)) + Number(rollModify);
   return rollValue;
 };
 
@@ -1942,6 +1942,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_DiceRoll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/DiceRoll */ "./resources/js/components/DiceRoll.js");
 
 
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -1974,26 +1982,26 @@ var Homepage = function Homepage() {
       _useState6 = _slicedToArray(_useState5, 2),
       pastRolls = _useState6[0],
       setPastRolls = _useState6[1];
-
-  var totalRoll = 0;
-  var rollNumber = 0;
   /*
     To do:
     The text box appears to be showing the previous roll's value
     */
 
+
   var rollDice = function rollDice(num) {
-    setDiceRoll((0,_components_DiceRoll__WEBPACK_IMPORTED_MODULE_3__.default)(num));
+    setDiceRoll((0,_components_DiceRoll__WEBPACK_IMPORTED_MODULE_3__.default)(num, rollModify)); //put the map into the ID
+
+    document.getElementById('rollHistory').innerHTML = "";
+    pastRolls.map(function (item) {
+      document.getElementById('rollHistory').innerHTML += "<div>".concat(item, "</div>");
+    });
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (diceRoll != 0) {
-      console.log(diceRoll);
-      totalRoll = Number(diceRoll) + Number(rollModify); // Trying to make the text update on current button push
-      // setPastRolls(pastRolls => pastRolls[rollNumber] = totalRoll);
-      // console.log(pastRolls)
-
-      rollNumber++;
+      setPastRolls(function (pastRolls) {
+        return [].concat(_toConsumableArray(pastRolls), [diceRoll]);
+      });
     }
   }, [diceRoll]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -2047,26 +2055,22 @@ var Homepage = function Homepage() {
         rollDice(19);
       },
       children: "20"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       id: "roll-area",
-      children: diceRoll
+      children: ["You rolled a ", diceRoll]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
       style: {
         marginTop: '1rem'
       },
-      children: "Rolls"
+      children: "Past Rolls"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      id: "rollHistory",
       style: {
         height: '500px',
         width: '100px',
         overflowY: 'scroll',
         border: 'solid 1px #666'
-      },
-      children: pastRolls.map(function (item) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          children: item
-        }, item);
-      })
+      }
     })]
   });
 };

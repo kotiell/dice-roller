@@ -7,8 +7,6 @@ const Homepage = () => {
   const [diceRoll, setDiceRoll] = useState(0);
   const [rollModify, setRollModify] = useState(0);
   const [pastRolls, setPastRolls] = useState([]);
-  let totalRoll = 0;
-  let rollNumber = 0;
 
   /*
     To do:
@@ -16,21 +14,22 @@ const Homepage = () => {
 
   */
   const rollDice = (num) => {
-    setDiceRoll(DiceRoll(num));
+    setDiceRoll(DiceRoll(num,rollModify));
+    //put the map into the ID
+    
+    document.getElementById('rollHistory').innerHTML = "";
+    pastRolls.map(item => {
+      document.getElementById('rollHistory').innerHTML += `<div>${item}</div>`
+    })
   }
 
   useEffect(() => {
     if (diceRoll != 0) {
-      console.log(diceRoll);
-      totalRoll = (Number(diceRoll) + Number(rollModify));
-      // Trying to make the text update on current button push
-      // setPastRolls(pastRolls => pastRolls[rollNumber] = totalRoll);
-      // console.log(pastRolls)
-      rollNumber++;
+      setPastRolls(pastRolls => [...pastRolls, diceRoll]);
     }
   }, [diceRoll]);
 
-  
+
 
   return (
     <div style={{ padding: '4rem' }}>
@@ -53,15 +52,10 @@ const Homepage = () => {
       <button onClick={() => { rollDice(19) }}>20</button>
 
       {/* Current Dice Roll */}
-      <div id="roll-area">{diceRoll}</div>
+      <div id="roll-area">You rolled a {diceRoll}</div>
 
-      <h3 style={{ marginTop: '1rem' }}>Rolls</h3>
-      <div style={{ height: '500px', width: '100px', overflowY: 'scroll', border: 'solid 1px #666' }}>
-        {
-          pastRolls.map(item => (
-            <div key={item}>{item}</div>
-          ))
-        }
+      <h3 style={{ marginTop: '1rem' }}>Past Rolls</h3>
+      <div id="rollHistory" style={{ height: '500px', width: '100px', overflowY: 'scroll', border: 'solid 1px #666' }}>
       </div>
     </div>
   )
